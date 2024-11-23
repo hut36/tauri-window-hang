@@ -12,7 +12,17 @@
   "app": {
     "windows": [
       {
-        "title": "tauri-window-hang",
+        "create": false,
+        "label": "main",
+        "title": "Main Window",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "create": true,
+        "label": "window1",
+        "title": "Window 1",
+        "url": "window1",
         "width": 800,
         "height": 600
       }
@@ -23,7 +33,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": "all",
+    "targets": "app",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

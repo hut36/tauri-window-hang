@@ -7,6 +7,18 @@ fn greet(name: &str) -> String {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_window_state::Builder::new().build())
+        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            println!("single instance: {:?}", _args);
+
+            let _win = tauri::WebviewWindowBuilder::from_config(app, &app.config().app.windows.first().unwrap().clone()).unwrap().build().ok();
+            /*
+            // or:
+            let _win = tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
+                .title("Main Window")
+                .build();
+            */
+        }))
         .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
